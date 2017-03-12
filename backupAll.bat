@@ -1,0 +1,31 @@
+@if "%logfolder%" EQU "" @goto cmdMessage
+@color 4e
+@SetLocal EnableExtensions EnableDelayedExpansion
+@set log1cfile=%logfolder%backup1cAll-%now%.log
+@for /F "usebackq delims=;" %%i in ("%basesfile%") do @call backupOne.bat %%i
+@powershell get-date -format g >> %logfile%
+@if "%needUploadToCloud%" EQU "1" @goto uploadToCloud
+
+
+:continueScript
+@powershell get-date -format g >> %logfile%
+@echo Clearing log files older %olderdays% days... >> %logfile%
+@forfiles /p %logfolder% /m *.log -d -%olderdays% -c "del @file">> %logfile%
+@goto endProcedure
+
+
+:uploadToCloud
+@start "upload files to cloud" uploadToCloud.bat %uploadlistfile%
+@goto continueScript
+
+
+
+:cmdMessage
+@echo ----------------------------------------------------
+@echo Û   USE run.bat with params                        Û
+@echo Û         "bak"                                    Û
+@echo Û         1c admin name                            Û
+@echo Û         1c admin password                        Û
+@echo ----------------------------------------------------
+@pause
+:endProcedure
