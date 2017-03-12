@@ -1,8 +1,9 @@
-if "%logfolder%" EQU "" @goto cmdMessage
+@echo off
+chcp 65001>nul
+if "%logfolder%" EQU "" goto cmdMessage
 color 4e
 
-if "%needbackup%" EQU "1" @call ./backupAll.bat
-
+if "%needbackup%" NEQ "0" call %~dp0backupAll.bat
 set log1cfile=%logfolder%update1cAll-%now%.log
 
 for /F "usebackq delims=;" %%i in ("%basesfile%") do (

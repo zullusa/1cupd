@@ -1,5 +1,5 @@
 @echo off
-chcp 65001
+chcp 65001>nul
 set uploadlogfile=./zu.log
 if not exist %1 goto errorMessage
 color 4e

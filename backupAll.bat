@@ -1,3 +1,5 @@
+@echo off
+chcp 65001>nul
 if "%logfolder%" EQU "" goto cmdMessage
 color 4e
 SetLocal EnableExtensions EnableDelayedExpansion
