@@ -1,35 +1,36 @@
-@if "%logfolder%" EQU "" @goto cmdMessage
-@color 4e
+if "%logfolder%" EQU "" @goto cmdMessage
+color 4e
 
-@if "%needbackup%" EQU "1" @call ./backupAll.bat
+if "%needbackup%" EQU "1" @call ./backupAll.bat
 
-@set log1cfile=%logfolder%update1cAll-%now%.log
+set log1cfile=%logfolder%update1cAll-%now%.log
 
-@for /F "usebackq delims=;" %%i in ("%basesfile%") do (
-	@echo ----------------------------------------------------
-	@echo … ‡€Š›‚€’œ ŽŠŽ „Ž ’ŽƒŽ, Š€Š … “„…’ …„‹Ž†…Ž
-	@echo DO NOT CLOSE THE WINDOW UNTIL SUGGESTION
-	@echo ----------------------------------------------------
-	@for /F "usebackq delims=;" %%j in ("%updtfile%") do (
-		@powershell get-date -format g >> %logfile%
-		@echo Installing update %%j to %%i... >> %logfile%
-		@echo Installing update %%j to %%i...
-		@call "%onecexe%" CONFIG /%basetype% "%server%\%%i" /N %user% /P %pass% /UpdateCfg "%%j" /Out "%log1cfile%" -NoTruncate  >> %logfile%
+for /F "usebackq delims=;" %%i in ("%basesfile%") do (
+	echo %%i>>%log1cfile%
+	for /F "usebackq delims=;" %%j in ("%updtfile%") do (
+		powershell get-date -format g>>%log1cfile%
+		echo %%j>>%log1cfile%
+		powershell get-date -format g >> %logfile%
+		echo Installing update %%j to %%i... >> %logfile%
+		echo Installing update %%j to %%i...
+		call "%onecexe%" CONFIG /%basetype% "%server%\%%i" /N %user% /P %pass% /UpdateCfg "%%j" /Out "%log1cfile%" -NoTruncate  >> %logfile%
 	)
-	@powershell get-date -format g >> %logfile%
-	@echo Commiting configuration %%i...  >> %logfile%
-	@echo Commiting configuration %%i...  
-	@call "%onecexe%" CONFIG /%basetype% "%server%\%%i" /N %user% /P %pass% /UpdateDBCfg /Out "%log1cfile%" -NoTruncate >> %logfile%
+	powershell get-date -format g >> %logfile%
+	echo Commiting configuration %%i...>>%logfile%
+	echo Commiting configuration %%i...
+	echo Commiting>>%log1cfile%
+	powershell get-date -format g>>%log1cfile%
+	call "%onecexe%" CONFIG /%basetype% "%server%\%%i" /N %user% /P %pass% /UpdateDBCfg /Out "%log1cfile%" -NoTruncate >> %logfile%
 )
-@powershell get-date -format g >> %logfile%
+powershell get-date -format g >> %logfile%
 
-@goto endProcedure
+goto endProcedure
 :cmdMessage
-@echo ----------------------------------------------------
-@echo Û   USE run.bat with params                        Û
-@echo Û         "upd"                                    Û
-@echo Û         1c admin name                            Û
-@echo Û         1c admin password                        Û
-@echo ----------------------------------------------------
-@pause
+echo ----------------------------------------------------
+echo â–ˆ   USE run.bat with params                        â–ˆ
+echo â–ˆ         "upd"                                    â–ˆ
+echo â–ˆ         1c admin name                            â–ˆ
+echo â–ˆ         1c admin password                        â–ˆ
+echo ----------------------------------------------------
+pause
 :endProcedure

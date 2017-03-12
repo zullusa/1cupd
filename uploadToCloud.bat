@@ -1,44 +1,45 @@
-@set uploadlogfile=./zu.log
-
-@if not exist %1 @goto errorMessage
-@color 4e
-@echo ----------------------------------------------------
-@echo … ‡€›‚€’  „ ’ƒ, € … “„…’ …„‹†…
-@echo DO NOT CLOSE THE WINDOW UNTIL SUGGESTION
-@echo ----------------------------------------------------
-@powershell get-date -format g >> %uploadlogfile%
-@echo Check destination dropbox.com>>%uploadlogfile%
+@echo off
+chcp 65001
+set uploadlogfile=./zu.log
+if not exist %1 goto errorMessage
+color 4e
+echo ----------------------------------------------------
+echo ΠΠ• Π—ΠΠΠ Π«Π’ΠΠΆΠ¬ ΠΠΠΠ Π”Π ΠΆΠΠ“Π, ΠΠΠ ΠΠ• Π‘Π£Π”Π•ΠΆ ΠΠ Π•Π”Π›ΠΠ–Π•ΠΠ
+echo DO NOT CLOSE THE WINDOW UNTIL SUGGESTION
+echo ----------------------------------------------------
+powershell get-date -format g >> %uploadlogfile%
+echo Check destination dropbox.com>>%uploadlogfile%
 :pingOneMore
-@ping dropbox.com -n 1 | find "­¥ γ¤ «®αμ">>%uploadlogfile%
-@if %ERRORLEVEL% EQU 0 @goto pingOneMore>>%uploadlogfile%
-@powershell get-date -format g >> %uploadlogfile%
-@echo Copy arc to cloud>>%uploadlogfile%
-@echo %java%>>%uploadlogfile%
-@for /F "usebackq delims=;" %%i in ("%1") do (
-	@%java% -jar %zu% uf "./auth.sec" %%i>>%uploadlogfile%
-	@powershell get-date -format g >> %uploadlogfile%
+ping dropbox.com -n 1 | find "Π½Πµ ΡƒΠ΄Π°Π»ΠΎΡΡ">>%uploadlogfile%
+if %ERRORLEVEL% EQU 0 goto pingOneMore>>%uploadlogfile%
+powershell get-date -format g >> %uploadlogfile%
+echo Copy arc to cloud>>%uploadlogfile%
+echo %java%>>%uploadlogfile%
+for /F "usebackq delims=;" %%i in ("%1") do (
+	%java% -jar %zu% uf "./auth.sec" %%i>>%uploadlogfile%
+	powershell get-date -format g >> %uploadlogfile%
 )
-@del %1>> %uploadlogfile%
-@goto endProcedure
+del %1>>%uploadlogfile%
+goto endProcedure
 
 :errorMessage
-@powershell get-date -format g >> %uploadlogfile%
-@echo File "%1" not found. See 1c log>>%uploadlogfile%
-@goto endProcedure
+powershell get-date -format g >> %uploadlogfile%
+echo File "%1" not found. See 1c log>>%uploadlogfile%
+goto endProcedure
 
 :cmdMessage
-@echo ----------------------------------------------------
-@echo Ϋ   USE run.bat with params                        Ϋ
-@echo Ϋ         "bak"                                    Ϋ
-@echo Ϋ         1c admin name                            Ϋ
-@echo Ϋ         1c admin password                        Ϋ
-@echo ----------------------------------------------------
-@pause
+echo ----------------------------------------------------
+echo β–   USE run.bat with params                        β–
+echo β–         "bak"                                    β–
+echo β–         1c admin name                            β–
+echo β–         1c admin password                        β–
+echo ----------------------------------------------------
+pause
 
 
 :endProcedure
-@color 08
-@echo ----------------------------------------------------
-@echo  † ‡€›’
-@echo YOU MAY CLOSE THE WINDOW
-@echo ----------------------------------------------------
+color 08
+echo ----------------------------------------------------
+echo ΠΠΠΠ ΠΠΠ–ΠΠ Π—ΠΠΠ Π«ΠΆΠ¬
+echo YOU MAY CLOSE THE WINDOW
+echo ----------------------------------------------------
