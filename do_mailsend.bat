@@ -10,4 +10,5 @@ mailsend1.19.exe -smtp [smtp_host] ^
     -attach %log1cfile% ^
     -user [smtp_user] ^
     -pass [smtp_pass] ^
-    -auth>>%logfile%
+    -auth>>%logfile% ^
+	-v

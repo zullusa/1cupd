@@ -49,9 +49,10 @@ echo ----------------------------------------------------
 goto endScript
 
 :sendEmail
-
-goto endProcess
 %~d0do_mailsend.bat
+goto endProcess
+
+
 :endProcess
 color 2A
 cls
