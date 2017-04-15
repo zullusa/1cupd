@@ -23,12 +23,20 @@ set needbackup=1
 set needUploadToCloud=0
 set olderdays=100
 
+set smtp=[smtp.server]
+set port=[smtp_port]
+set mail_to=[mail@to]
+set mail_from=[mail@from]
+set logMail=%logfolder%sendmail.log
+set smtp_user=[smtp-user]
+set smtp_pass=[smtp-pass]
+
 set now=%DATE: =0% %TIME: =0%
 for /f "tokens=1-7 delims=/-:., " %%a in ( "%now%" ) do @set now=%%c%%b%%a_%%d%%e
 
 set log1cfile=%logfolder%1cAll-%now%.log
 set logfile=%logfolder%all%now%.log
-set logMail=%logfolder%sendmail.log
+
 
 
 :: SPECIFY All available bases, for first name use one character ">"
