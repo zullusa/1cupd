@@ -1,34 +1,42 @@
 @echo off
-chcp 65001>nul
-call %~dp0setEnvironment.bat
+mode con: cp select=1251 > nul
+call %~d0setEnvironment.bat
 set user=%2
 set pass=%3
 set all=%4
-set needbackup=%5
+set nbu=%5
 
 if not exist %logfolder% md %logfolder%
 if "%user%" EQU "" goto scriptMessage
-if "%all%" EQU "" call notepad %basesfile%
+if "%all%" NEQ "all" call notepad %basesfile%
+if "%nbu%" EQU "0" set needbackup=0
+
 if "%1" == "upd" goto Update
 if "%1" == "bak" goto Backup
 goto scriptMessage
 
-:Update
 
+:Update
 echo ----------------------------------------------------
-echo –û–ë–ù–û–í–õ–ï–ù–ò–ï –ö–û–ù–§–ò–ì–£–†–ê–¶–ò–ô
+echo Œ¡ÕŒ¬À≈Õ»≈  ŒÕ‘»√”–¿÷»…
+echo ----------------------------------------------------
+echo Õ≈ «¿ –€¬¿“‹ Œ ÕŒ ƒŒ “Œ√Œ,  ¿  Õ≈ ¡”ƒ≈“ œ–≈ƒÀŒ∆≈ÕŒ
+echo DO NOT CLOSE THE WINDOW UNTIL SUGGESTION
+echo ----------------------------------------------------
 title Update All
-set logfile=%logfolder%upd-%now%.log
-call %~dp0updateAll.bat
-goto endProcess
+call %~d0do_update.bat
+goto sendEmail
 
 :Backup
 echo ----------------------------------------------------
-echo –†–ï–ó–ï–†–í–ù–û–ï –ö–û–ü–ò–†–û–í–ê–ù–ò–ï –ö–û–ù–§–ò–ì–£–†–ê–¶–ò–ô
+echo –≈«≈–¬ÕŒ≈  Œœ»–Œ¬¿Õ»≈  ŒÕ‘»√”–¿÷»…
+echo ----------------------------------------------------
+echo Õ≈ «¿ –€¬¿“‹ Œ ÕŒ ƒŒ “Œ√Œ,  ¿  Õ≈ ¡”ƒ≈“ œ–≈ƒÀŒ∆≈ÕŒ
+echo DO NOT CLOSE THE WINDOW UNTIL SUGGESTION
+echo ----------------------------------------------------
 title Backup All
-set logfile=%logfolder%bak-%now%.log
-call %~dp0backupAll.bat
-goto endProcess
+call %~d0do_backup.bat
+goto sendEmail
 
 :scriptMessage
 echo ----------------------------------------------------
@@ -36,14 +44,19 @@ echo SPECIFY bak - to backup, upd - to update (1st parameter mandatory)
 echo SPECIFY 1c admin name (2nd parameter mandatory)
 echo SPECIFY 1c admin password (3d parameter mandatory)
 echo USE all flag if need to process all bases (4th parameter not mandatory)
-echo USE 0 or 1 flag if need to backup(5th parameter not mandatory)
+echo USE 1 flag if need to backup bases (5th parameter not mandatory)
 echo ----------------------------------------------------
 goto endScript
 
+:sendEmail
+
+goto endProcess
+%~d0do_mailsend.bat
 :endProcess
-color 08
+color 2A
+cls
 echo ----------------------------------------------------
-echo –û–ö–ù–û –ú–û–ñ–ù–û –ó–ê–ö–†–´–¢–¨
+echo Œ ÕŒ ÃŒ∆ÕŒ «¿ –€“‹
 echo YOU MAY CLOSE THE WINDOW
 echo ----------------------------------------------------
 goto endScript

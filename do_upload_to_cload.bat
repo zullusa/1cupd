@@ -1,25 +1,27 @@
 @echo off
-chcp 65001>nul
+mode con: cp select=1251 > nul
 set uploadlogfile=./zu.log
-if not exist %1 goto errorMessage
+
+if not exist %1 @goto errorMessage
 color 4e
 echo ----------------------------------------------------
-echo –ù–ï –ó–ê–ö–†–´–í–ê–¢–¨ –û–ö–ù–û –î–û –¢–û–ì–û, –ö–ê–ö –ù–ï –ë–£–î–ï–¢ –ü–†–ï–î–õ–û–ñ–ï–ù–û
+echo Õ≈ «¿ –€¬¿“‹ Œ ÕŒ ƒŒ “Œ√Œ,  ¿  Õ≈ ¡”ƒ≈“ œ–≈ƒÀŒ∆≈ÕŒ
 echo DO NOT CLOSE THE WINDOW UNTIL SUGGESTION
 echo ----------------------------------------------------
 powershell get-date -format g >> %uploadlogfile%
 echo Check destination dropbox.com>>%uploadlogfile%
 :pingOneMore
-ping dropbox.com -n 1 | find "–Ω–µ —É–¥–∞–ª–æ—Å—å">>%uploadlogfile%
-if %ERRORLEVEL% EQU 0 goto pingOneMore>>%uploadlogfile%
+ping dropbox.com -n 1 | find "ÌÂ Û‰‡ÎÓÒ¸">>%uploadlogfile%
+if %ERRORLEVEL% EQU 0 @goto pingOneMore>>%uploadlogfile%
 powershell get-date -format g >> %uploadlogfile%
 echo Copy arc to cloud>>%uploadlogfile%
-echo %java%>>%uploadlogfile%
+%java% -version>>%uploadlogfile%
 for /F "usebackq delims=;" %%i in ("%1") do (
+    echo upload %%i
 	%java% -jar %zu% uf "./auth.sec" %%i>>%uploadlogfile%
 	powershell get-date -format g >> %uploadlogfile%
 )
-del %1>>%uploadlogfile%
+del %1>> %uploadlogfile%
 goto endProcedure
 
 :errorMessage
@@ -29,17 +31,16 @@ goto endProcedure
 
 :cmdMessage
 echo ----------------------------------------------------
-echo ‚ñà   USE run.bat with params                        ‚ñà
-echo ‚ñà         "bak"                                    ‚ñà
-echo ‚ñà         1c admin name                            ‚ñà
-echo ‚ñà         1c admin password                        ‚ñà
+echo -   USE run.bat with params                        -
+echo -         "bak"                                    -
+echo -         1c admin name                            -
+echo -         1c admin password                        -
 echo ----------------------------------------------------
 pause
-
 
 :endProcedure
 color 08
 echo ----------------------------------------------------
-echo –û–ö–ù–û –ú–û–ñ–ù–û –ó–ê–ö–†–´–¢–¨
+echo Œ ÕŒ ÃŒ∆ÕŒ «¿ –€“‹
 echo YOU MAY CLOSE THE WINDOW
 echo ----------------------------------------------------
