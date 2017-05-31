@@ -21,7 +21,7 @@ for /F "usebackq delims=;" %%i in ("%basesfile%") do (
 	call "%onecexe%" CONFIG /%basetype% "%server%\%%~i" /N %user% /P %pass% /DumpIB "!backupfile!" /Out "%log1cfile%" -NoTruncate>>%logfile%
 	echo "!backupfile!" "%cloudfolder%!backfiletocloud!";>>%uploadlistfile%
 	echo Clearing bakup files older %olderdays% days... >> %logfile%
-	forfiles /p %backupfolder%%%~i /m *.dt -d -%olderdays% -c "del file">> %logfile%
+	forfiles /p %backupfolder%%%~i /m *.dt -d -%olderdays% -c "cmd /c del @path">> %logfile%
 )
 powershell get-date -format g >> %logfile%
 if "%needUploadToCloud%" EQU "1" goto uploadToCloud
@@ -30,7 +30,7 @@ if "%needUploadToCloud%" EQU "1" goto uploadToCloud
 :continueScript
 powershell get-date -format g >> %logfile%
 echo Clearing log files older %olderdays% days... >> %logfile%
-forfiles /p %logfolder% /m *.log -d -%olderdays% -c "del file">> %logfile%
+forfiles /p %logfolder% /m *.log -d -%olderdays% -c "cmd /c del @path">> %logfile%
 goto endProcedure
 
 
