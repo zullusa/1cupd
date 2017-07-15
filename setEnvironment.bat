@@ -11,13 +11,13 @@ set cloudfolder=[specify/cloud/folder]
 set updtsdir=[specify\updates\folder]
 
 :: IN UPDATE list use ONLY version exmpl 3_0_49_21
-set updtfile=%~d0updates.list
-set basesfile=%~d0bases.list
-set uploadlistfile=%~d0upload.list
+set updtfile=%~dp0updates.list
+set basesfile=%~dp0bases.list
+set uploadlistfile=%~dp0upload.list
 
 set onecexe=[specify\path\to\1cv8.exe]
 set java=java.exe
-set zu=%~d0ZullusaUploader.jar
+set zu=%~dp0ZullusaUploader.jar
 
 set needbackup=1
 set needUploadToCloud=0
