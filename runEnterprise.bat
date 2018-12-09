@@ -5,6 +5,9 @@ call notepad %basesfile%
 
 for /F "usebackq delims=;" %%I in ("%basesfile%") do (
 cls
-echo Запуск %%I
+title %%I
+echo [info] --------------------------------------------------------
+echo [info]                       Запуск %%I
+echo [info] --------------------------------------------------------
 "%onecexe%" ENTERPRISE /%basetype% "%server%\%%I" /AppAutoCheckMode
 )
