@@ -8,7 +8,7 @@ del %uploadlistfile%
 for /F "usebackq delims=;" %%i in ("%basesfile%") do (
 	cls
 	echo ----------------------------------------------------
-	echo ÍÅ ÇÀÊÐÛÂÀÒÜ ÎÊÍÎ ÄÎ ÒÎÃÎ, ÊÀÊ ÍÅ ÁÓÄÅÒ ÏÐÅÄËÎÆÅÍÎ
+	echo ÃÃ… Ã‡Ã€ÃŠÃÃ›Ã‚Ã€Ã’Ãœ ÃŽÃŠÃÃŽ Ã„ÃŽ Ã’ÃŽÃƒÃŽ, ÃŠÃ€ÃŠ ÃÃ… ÃÃ“Ã„Ã…Ã’ ÃÃÃ…Ã„Ã‹ÃŽÃ†Ã…ÃÃŽ
 	echo DO NOT CLOSE THE WINDOW UNTIL SUGGESTION
 	echo ----------------------------------------------------
 	if not exist %backupfolder%%%~i md %backupfolder%%%~i>>%logfile%
@@ -18,7 +18,7 @@ for /F "usebackq delims=;" %%i in ("%basesfile%") do (
 	echo [info] ---------------------------- %%~i ---------------------------->>%log1cfile%
 	set backupfile=%backupfolder%%%~i\%%~i-%now%.dt
 	set backfiletocloud=%%~i.dt
-	call "%onecexe%" CONFIG /%basetype% "%server%\%%~i" /N %user% /P %pass% /DumpIB "!backupfile!" /Out "%log1cfile%" -NoTruncate>>%logfile%
+	call "%onecexe%" CONFIG /%basetype% "%server%\%%~i" /DisableStartupMessages /DisableStartupDialogs /N %user% /P %pass% /DumpIB "!backupfile!" /Out "%log1cfile%" -NoTruncate>>%logfile%
 	echo "!backupfile!" "%cloudfolder%!backfiletocloud!";>>%uploadlistfile%
 	echo Clearing bakup files older %olderdays% days... >> %logfile%
 	forfiles /p %backupfolder%%%~i /m *.dt -d -%olderdays% -c "cmd /c del @path">> %logfile%
