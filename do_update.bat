@@ -7,7 +7,7 @@ if "%needbackup%" EQU "1" call ./do_backup.bat
 for /F "usebackq delims=;" %%i in ("%basesfile%") do (
 	cls
 	echo ----------------------------------------------------
-	echo ÍÅ ÇÀÊÐÛÂÀÒÜ ÎÊÍÎ ÄÎ ÒÎÃÎ, ÊÀÊ ÍÅ ÁÓÄÅÒ ÏÐÅÄËÎÆÅÍÎ
+	echo ÃÃ… Ã‡Ã€ÃŠÃÃ›Ã‚Ã€Ã’Ãœ ÃŽÃŠÃÃŽ Ã„ÃŽ Ã’ÃŽÃƒÃŽ, ÃŠÃ€ÃŠ ÃÃ… ÃÃ“Ã„Ã…Ã’ ÃÃÃ…Ã„Ã‹ÃŽÃ†Ã…ÃÃŽ
 	echo DO NOT CLOSE THE WINDOW UNTIL SUGGESTION
 	echo ----------------------------------------------------
 	echo Updating %%i ...
@@ -18,13 +18,13 @@ for /F "usebackq delims=;" %%i in ("%basesfile%") do (
 		echo Installing update %updtsdir%\%%j\1cv8.cfu to %server%\%%i... >> %logfile%
 		powershell get-date -format g >> %log1cfile%
 		echo [info] %%j >> %log1cfile%
-		call "%onecexe%" CONFIG /%basetype% "%server%\%%i" /N %user% /P %pass% /UpdateCfg "%updtsdir%\%%j\1cv8.cfu" /Out "%log1cfile%" -NoTruncate  >> %logfile%
+		call "%onecexe%" CONFIG /%basetype% "%server%\%%i" /DisableStartupMessages /DisableStartupDialogs /N %user% /P %pass% /UpdateCfg "%updtsdir%\%%j\1cv8.cfu" /Out "%log1cfile%" -NoTruncate  >> %logfile%
 	)
 	powershell get-date -format g >> %logfile%
 	powershell get-date -format g >> %log1cfile%
 	echo [warn] Commiting configuration %%i...  >> %logfile%
 	echo [warn] Commiting configuration %%i...  >>%log1cfile%
-	call "%onecexe%" CONFIG /%basetype% "%server%\%%i" /N %user% /P %pass% /UpdateDBCfg /Out "%log1cfile%" -NoTruncate >> %logfile%
+	call "%onecexe%" CONFIG /%basetype% "%server%\%%i" /DisableStartupMessages /DisableStartupDialogs /N %user% /P %pass% /UpdateDBCfg /Out "%log1cfile%" -NoTruncate >> %logfile%
 )
 powershell get-date -format g >> %logfile%
 
